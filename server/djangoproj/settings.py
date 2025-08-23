@@ -62,7 +62,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR,'frontend/static')
+            os.path.join(BASE_DIR, 'frontend/build'),  # This is where index.html is
+            os.path.join(BASE_DIR, 'frontend/static')  # Keep this for About.html, Contact.html
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -74,6 +75,12 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+# Update STATICFILES_DIRS too
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'frontend/build/static'),  # React build assets
+    os.path.join(BASE_DIR, 'frontend/static')         # Your static files
 ]
 
 WSGI_APPLICATION = 'djangoproj.wsgi.application'
@@ -135,8 +142,3 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'frontend/static')
-]
-
