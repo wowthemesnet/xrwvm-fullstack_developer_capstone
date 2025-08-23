@@ -1,0 +1,38 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+    
+    - name: Install dependencies
+      run: |
+        cd server
+        pip install -r requirements.txt
+    
+    - name: Run Django tests
+      run: |
+        cd server
+        python manage.py test
+    
+    - name: Build Docker image
+      run: |
+        cd server
+        docker build -t dealership:latest .
+    
+    - name: Deploy success
+      run: |
+        echo "CI/CD Pipeline completed successfully!"
